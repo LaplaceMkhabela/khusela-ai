@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Scan History | Khusela AI</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;600;700&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script>
+  tailwind.config = {
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          "surface-dim": "#051424", "surface": "#051424", "on-surface": "#d4e4fa",
+          "on-surface-variant": "#c7c4d7", "outline-variant": "#464554",
+          "primary": "#c0c1ff", "primary-container": "#8083ff", "error": "#ffb4ab",
+          "secondary": "#bec6e0", "tertiary": "#bcc7de"
+        },
+        fontFamily: { 
+          'body-lg': ['Hanken Grotesk'], 'headline-md': ['Hanken Grotesk'],
+          'code-sm': ['JetBrains Mono', 'monospace'], 'display-lg': ['Hanken Grotesk'],
+          'label-caps': ['JetBrains Mono'], 'body-md': ['Hanken Grotesk'], 'headline-lg': ['Hanken Grotesk']
+        },
+        fontSize: {
+          'body-lg': ['18px', { lineHeight: '28px', fontWeight: '400' }],
+          'headline-md': ['24px', { lineHeight: '32px', fontWeight: '600' }],
+          'code-sm': ['14px', { lineHeight: '20px', fontWeight: '500' }],
+          'display-lg': ['48px', { lineHeight: '56px', letterSpacing: '-0.02em', fontWeight: '700' }],
+          'label-caps': ['12px', { lineHeight: '16px', letterSpacing: '0.05em', fontWeight: '700' }],
+          'body-md': ['16px', { lineHeight: '24px', fontWeight: '400' }],
+          'headline-lg': ['32px', { lineHeight: '40px', fontWeight: '600' }]
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background-color: #051424; color: #d4e4fa; overflow-x: hidden; }
+  .glass-panel { background: rgba(18, 33, 49, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(192, 193, 255, 0.1); }
+  .scan-row:hover { background: rgba(192, 193, 255, 0.05); border-color: rgba(192, 193, 255, 0.3); }
+  .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; vertical-align: middle; }
+  .neon-glow-primary { box-shadow: 0 0 15px rgba(192, 193, 255, 0.2); }
+  
+  /* Custom scrollbar */
+  .results-scroll::-webkit-scrollbar { width: 6px; }
+  .results-scroll::-webkit-scrollbar-track { background: rgba(70, 69, 84, 0.3); border-radius: 3px; }
+  .results-scroll::-webkit-scrollbar-thumb { background: #c0c1ff; border-radius: 3px; }
+  .results-scroll::-webkit-scrollbar-thumb:hover { background: #8083ff; }
+</style>
+</head>
+<body class="bg-surface">
+
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 w-full z-50 bg-surface-container/60 backdrop-blur-xl border-b border-outline-variant/30">
+  <div class="flex items-center justify-between px-6 h-16 max-w-[1440px] mx-auto">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined text-primary text-2xl">shield</span>
+      <a href="/"><span class="font-headline-md text-headline-md font-bold tracking-tight text-primary">Khusela AI</span></a>
+    </div>
+    <nav class="hidden md:flex items-center space-x-6">
+      <a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-md" href="/dashboard">Dashboard</a>
+      <a class="text-on-surface-variant hover:text-on-surface transition-colors font-body-md" href="/scan">Scan</a>
+      <a class="text-primary border-b-2 border-primary pb-1 font-body-md" href="/history">History</a>
+    </nav>
+    <div></div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main class="pt-24 pb-12 px-4 md:px-6 min-h-screen">
+  <div class="max-w-[1200px] mx-auto space-y-6">
+    
+    <!-- Header -->
+    <div>
+      <h1 class="font-headline-lg text-headline-lg font-bold tracking-tight text-on-surface">Scan History</h1>
+      <p class="text-on-surface-variant font-body-md">View and manage all your past dependency scans.</p>
+    </div>
+    
+    <!-- Filters & Search Section -->
+    <section class="glass-panel rounded-xl p-4 flex flex-wrap items-center justify-between gap-4">
+      <div class="relative flex-1 min-w-[300px]">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+        <input class="w-full bg-surface-container-lowest border border-outline-variant/30 rounded-lg py-2.5 pl-10 pr-4 text-on-surface focus:outline-none focus:border-primary transition-colors placeholder:text-outline" placeholder="Search by file name or ID..." type="text" id="searchInput">
+      </div>
+      <div class="flex items-center gap-3">
+        <div class="relative">
+          <select class="appearance-none bg-surface-container-lowest border border-outline-variant/30 rounded-lg py-2.5 pl-4 pr-10 text-on-surface-variant font-label-caps text-label-caps focus:outline-none focus:border-primary transition-colors cursor-pointer" id="severityFilter">
+            <option value="all">ALL SEVERITIES</option>
+            <option value="critical">CRITICAL</option>
+            <option value="high">HIGH</option>
+            <option value="medium">MEDIUM</option>
+            <option value="clean">CLEAN</option>
+          </select>
+          <span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-outline text-[18px]">expand_more</span>
+        </div>
+        <button class="p-2.5 bg-surface-container-highest border border-outline-variant/30 rounded-lg text-on-surface-variant hover:text-primary transition-colors" onclick="refreshHistory()">
+          <span class="material-symbols-outlined">refresh</span>
+        </button>
+      </div>
+    </section>
+    
+    <!-- Table Header (Desktop) -->
+    <div class="hidden md:grid grid-cols-12 gap-4 px-6 py-3 bg-surface-container-high rounded-t-lg border border-outline-variant/20">
+      <div class="col-span-4 font-label-caps text-label-caps text-outline">FILE / PACKAGE NAME</div>
+      <div class="col-span-2 font-label-caps text-label-caps text-outline">TIMESTAMP</div>
+      <div class="col-span-2 font-label-caps text-label-caps text-outline text-center">PACKAGES</div>
+      <div class="col-span-3 font-label-caps text-label-caps text-outline">VULNERABILITIES</div>
+      <div class="col-span-1 font-label-caps text-label-caps text-outline text-right">ACTION</div>
+    </div>
+    
+    <!-- Scan Items List -->
+    <div class="space-y-px" id="historyList">
+      <div class="text-center py-12 text-on-surface-variant">Loading history...</div>
+    </div>
+    
+    <!-- Pagination -->
+    <div class="flex items-center justify-between py-6" id="pagination">
+      <p class="font-code-sm text-[12px] text-outline" id="resultsCount">Showing 0 results</p>
+      <div class="flex items-center gap-2" id="paginationButtons"></div>
+    </div>
+    
+    <!-- Analytics Visual Hint -->
+    <section class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-8">
+      <div class="glass-panel p-6 rounded-xl border-l-4 border-error">
+        <h3 class="font-label-caps text-label-caps text-outline mb-2">CRITICAL THREATS</h3>
+        <div class="flex items-end justify-between">
+          <span class="font-display-lg text-[32px] font-bold text-on-surface" id="totalCritical">0</span>
+          <span class="text-error font-code-sm" id="criticalTrend">-</span>
+        </div>
+      </div>
+      <div class="glass-panel p-6 rounded-xl border-l-4 border-primary">
+        <h3 class="font-label-caps text-label-caps text-outline mb-2">SCANS COMPLETED</h3>
+        <div class="flex items-end justify-between">
+          <span class="font-display-lg text-[32px] font-bold text-on-surface" id="totalScans">0</span>
+          <span class="text-primary font-code-sm">Total</span>
+        </div>
+      </div>
+      <div class="glass-panel p-6 rounded-xl border-l-4 border-tertiary">
+        <h3 class="font-label-caps text-label-caps text-outline mb-2">VULNERABILITIES FOUND</h3>
+        <div class="flex items-end justify-between">
+          <span class="font-display-lg text-[32px] font-bold text-on-surface" id="totalVulns">0</span>
+          <span class="text-tertiary font-code-sm">Across all scans</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="w-full py-6 bg-surface-dim border-t border-outline-variant/10 mt-8">
+  <div class="flex flex-col md:flex-row justify-between items-center px-6 max-w-[1440px] mx-auto gap-4">
+    <p class="font-code-sm text-code-sm text-on-surface-variant opacity-80">© 2026 Khusela AI v1.0.0-stable</p>
+    <div class="flex gap-6">
+      <a class="font-code-sm text-code-sm text-on-surface-variant hover:text-primary underline transition-colors" href="/privacy">Privacy Policy</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+let allHistory = [];
+let currentPage = 1;
+let itemsPerPage = 10;
+
+async function loadHistory() {
+  try {
+    const response = await fetch('/api/scan-history');
+    allHistory = await response.json();
+    updateStats();
+    filterAndDisplay();
+  } catch (err) {
+    document.getElementById('historyList').innerHTML = '<div class="text-center py-12 text-error">Failed to load history</div>';
+  }
+}
+
+function updateStats() {
+  const totalScans = allHistory.length;
+  const totalVulns = allHistory.reduce((sum, scan) => sum + scan.summary.vulnerabilitiesFound, 0);
+  const totalCritical = allHistory.reduce((sum, scan) => sum + (scan.summary.severityBreakdown?.CRITICAL || 0), 0);
+  
+  document.getElementById('totalScans').innerText = totalScans;
+  document.getElementById('totalVulns').innerText = totalVulns;
+  document.getElementById('totalCritical').innerText = totalCritical;
+}
+
+function filterAndDisplay() {
+  const searchQuery = document.getElementById('searchInput')?.value.toLowerCase() || '';
+  const severityFilter = document.getElementById('severityFilter')?.value || 'all';
+  
+  let filtered = allHistory.filter(scan => {
+    // Search filter
+    const matchesSearch = scan.fileName.toLowerCase().includes(searchQuery) || 
+                          scan.id.toLowerCase().includes(searchQuery);
+    if (!matchesSearch) return false;
+    
+    // Severity filter
+    if (severityFilter === 'all') return true;
+    if (severityFilter === 'clean') return scan.summary.vulnerabilitiesFound === 0;
+    
+    const severityMap = { critical: 'CRITICAL', high: 'HIGH', medium: 'MEDIUM' };
+    const severityKey = severityMap[severityFilter];
+    return (scan.summary.severityBreakdown?.[severityKey] || 0) > 0;
+  });
+  
+  // Pagination
+  const totalItems = filtered.length;
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
+  const start = (currentPage - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  const paginatedItems = filtered.slice(start, end);
+  
+  // Update results count
+  document.getElementById('resultsCount').innerText = `Showing ${start + 1}-${Math.min(end, totalItems)} of ${totalItems} results`;
+  
+  // Update pagination buttons
+  updatePaginationButtons(totalPages);
+  
+  // Render the list
+  renderHistoryList(paginatedItems);
+}
+
+function updatePaginationButtons(totalPages) {
+  const container = document.getElementById('paginationButtons');
+  if (!container) return;
+  
+  if (totalPages <= 1) {
+    container.innerHTML = '';
+    return;
+  }
+  
+  let buttons = '';
+  buttons += `<button class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center text-on-surface hover:border-primary transition-colors ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}" onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}><span class="material-symbols-outlined">chevron_left</span></button>`;
+  
+  for (let i = 1; i <= Math.min(totalPages, 5); i++) {
+    buttons += `<button class="w-10 h-10 rounded-lg ${currentPage === i ? 'bg-primary text-on-primary' : 'glass-panel text-on-surface hover:border-primary'} flex items-center justify-center transition-colors" onclick="changePage(${i})">${i}</button>`;
+  }
+  
+  if (totalPages > 5) {
+    buttons += `<span class="text-on-surface-variant">...</span>`;
+    buttons += `<button class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center text-on-surface hover:border-primary transition-colors" onclick="changePage(${totalPages})">${totalPages}</button>`;
+  }
+  
+  buttons += `<button class="w-10 h-10 rounded-lg glass-panel flex items-center justify-center text-on-surface hover:border-primary transition-colors ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}" onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}><span class="material-symbols-outlined">chevron_right</span></button>`;
+  
+  container.innerHTML = buttons;
+}
+
+function changePage(page) {
+  const totalPages = Math.ceil(allHistory.length / itemsPerPage);
+  if (page < 1 || page > totalPages) return;
+  currentPage = page;
+  filterAndDisplay();
+}
+
+function refreshHistory() {
+  currentPage = 1;
+  loadHistory();
+}
+
+function renderHistoryList(history) {
+  const container = document.getElementById('historyList');
+  
+  if (history.length === 0) {
+    container.innerHTML = '<div class="text-center py-12 text-on-surface-variant glass-panel rounded-xl">No scans found. Start a scan to see history.</div>';
+    return;
+  }
+  
+  container.innerHTML = history.map(scan => {
+    const severity = scan.summary.severityBreakdown || {};
+    const hasCritical = severity.CRITICAL > 0;
+    const hasHigh = severity.HIGH > 0;
+    const hasMedium = severity.MEDIUM > 0;
+    const isClean = scan.summary.vulnerabilitiesFound === 0;
+    
+    let severityBadges = '';
+    if (hasCritical) severityBadges += `<span class="px-2 py-0.5 rounded text-[10px] font-black bg-error text-on-error uppercase flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-on-error animate-pulse"></span>${severity.CRITICAL} Critical</span>`;
+    if (hasHigh) severityBadges += `<span class="px-2 py-0.5 rounded text-[10px] font-black bg-orange-600/80 text-white uppercase">${severity.HIGH} High</span>`;
+    if (hasMedium) severityBadges += `<span class="px-2 py-0.5 rounded text-[10px] font-black bg-yellow-600/80 text-white uppercase">${severity.MEDIUM} Medium</span>`;
+    if (isClean) severityBadges += `<span class="px-2 py-0.5 rounded text-[10px] font-black bg-green-600/80 text-white uppercase">✅ Clean</span>`;
+    
+    return `
+      <div class="scan-row grid grid-cols-12 gap-4 items-center px-6 py-5 glass-panel border border-outline-variant/20 transition-all cursor-pointer rounded-lg" onclick="viewScan('${scan.id}')">
+        <div class="col-span-12 md:col-span-4 flex items-center gap-4">
+          <div class="w-10 h-10 rounded-lg ${hasCritical ? 'bg-error-container/20 border border-error/30' : 'bg-primary/10 border border-primary/20'} flex items-center justify-center">
+            <span class="material-symbols-outlined ${hasCritical ? 'text-error' : 'text-primary'}">description</span>
+          </div>
+          <div>
+            <p class="font-body-md text-body-md font-semibold text-on-surface">${escapeHtml(scan.fileName)}</p>
+            <p class="font-code-sm text-[12px] text-outline">ID: ${scan.id}</p>
+          </div>
+        </div>
+        <div class="col-span-6 md:col-span-2">
+          <p class="font-body-md text-body-md text-on-surface">${new Date(scan.timestamp).toLocaleDateString()}</p>
+          <p class="font-code-sm text-[12px] text-outline">${new Date(scan.timestamp).toLocaleTimeString()}</p>
+        </div>
+        <div class="col-span-3 md:col-span-2 text-left md:text-center">
+          <span class="font-code-sm text-on-surface bg-surface-container-highest px-3 py-1 rounded">${scan.summary.packagesScanned}</span>
+        </div>
+        <div class="col-span-10 md:col-span-3 flex flex-wrap gap-2">
+          ${severityBadges}
+        </div>
+        <div class="col-span-2 md:col-span-1 text-right">
+          <button class="p-2 hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">chevron_right</span>
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function viewScan(scanId) {
+  window.location.href = `/dashboard?scan=${scanId}`;
+}
+
+// Event listeners
+document.getElementById('searchInput')?.addEventListener('input', () => {
+  currentPage = 1;
+  filterAndDisplay();
+});
+
+document.getElementById('severityFilter')?.addEventListener('change', () => {
+  currentPage = 1;
+  filterAndDisplay();
+});
+
+// Load history on page load
+loadHistory();
+</script>
+</body>
+</html>

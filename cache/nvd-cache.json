@@ -1,0 +1,241 @@
+{
+  "cpe:2.3:a:express:express:4.16.0:*:*:*:*:node.js:*:*": {
+    "package": "express",
+    "version": "4.16.0",
+    "cpeQueried": "cpe:2.3:a:express:express:4.16.0:*:*:*:*:node.js:*:*",
+    "status": "Clean",
+    "vulnerabilities": []
+  },
+  "cpe:2.3:a:lodash:lodash:4.17.4:*:*:*:*:node.js:*:*": {
+    "package": "lodash",
+    "version": "4.17.4",
+    "cpeQueried": "cpe:2.3:a:lodash:lodash:4.17.4:*:*:*:*:node.js:*:*",
+    "status": "Vulnerable",
+    "vulnerabilities": [
+      {
+        "id": "CVE-2018-3721",
+        "severity": "MEDIUM",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-3721"
+      },
+      {
+        "id": "CVE-2018-16487",
+        "severity": "MEDIUM",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2018-16487"
+      },
+      {
+        "id": "CVE-2019-1010266",
+        "severity": "MEDIUM",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-1010266"
+      },
+      {
+        "id": "CVE-2019-10744",
+        "severity": "CRITICAL",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-10744"
+      },
+      {
+        "id": "CVE-2020-8203",
+        "severity": "HIGH",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-8203"
+      },
+      {
+        "id": "CVE-2020-28500",
+        "severity": "MEDIUM",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2020-28500"
+      },
+      {
+        "id": "CVE-2021-23337",
+        "severity": "HIGH",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-23337"
+      },
+      {
+        "id": "CVE-2025-13465",
+        "severity": "MEDIUM",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-13465"
+      },
+      {
+        "id": "CVE-2026-2950",
+        "severity": "MEDIUM",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-2950"
+      },
+      {
+        "id": "CVE-2026-4800",
+        "severity": "HIGH",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-4800"
+      }
+    ]
+  },
+  "cpe:2.3:a:axios:axios:0.18.0:*:*:*:*:node.js:*:*": {
+    "package": "axios",
+    "version": "0.18.0",
+    "cpeQueried": "cpe:2.3:a:axios:axios:0.18.0:*:*:*:*:node.js:*:*",
+    "status": "Vulnerable",
+    "vulnerabilities": [
+      {
+        "id": "CVE-2019-10742",
+        "severity": "HIGH",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2019-10742"
+      },
+      {
+        "id": "CVE-2021-3749",
+        "severity": "HIGH",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2021-3749"
+      },
+      {
+        "id": "CVE-2024-57965",
+        "severity": "NONE",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2024-57965"
+      },
+      {
+        "id": "CVE-2025-27152",
+        "severity": "MEDIUM",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-27152"
+      },
+      {
+        "id": "CVE-2025-58754",
+        "severity": "HIGH",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-58754"
+      },
+      {
+        "id": "CVE-2026-25639",
+        "severity": "HIGH",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-25639"
+      },
+      {
+        "id": "CVE-2025-62718",
+        "severity": "CRITICAL",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2025-62718"
+      },
+      {
+        "id": "CVE-2026-40175",
+        "severity": "MEDIUM",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-40175"
+      },
+      {
+        "id": "CVE-2026-42033",
+        "severity": "HIGH",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-42033"
+      },
+      {
+        "id": "CVE-2026-42034",
+        "severity": "MEDIUM",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-42034"
+      },
+      {
+        "id": "CVE-2026-42035",
+        "severity": "HIGH",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-42035"
+      },
+      {
+        "id": "CVE-2026-42036",
+        "severity": "MEDIUM",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-42036"
+      },
+      {
+        "id": "CVE-2026-42038",
+        "severity": "MEDIUM",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-42038"
+      },
+      {
+        "id": "CVE-2026-42039",
+        "severity": "HIGH",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-42039"
+      },
+      {
+        "id": "CVE-2026-42040",
+        "severity": "LOW",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-42040"
+      },
+      {
+        "id": "CVE-2026-42041",
+        "severity": "MEDIUM",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-42041"
+      },
+      {
+        "id": "CVE-2026-42042",
+        "severity": "MEDIUM",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-42042"
+      },
+      {
+        "id": "CVE-2026-42043",
+        "severity": "HIGH",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-42043"
+      },
+      {
+        "id": "CVE-2026-44486",
+        "severity": "HIGH",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-44486"
+      },
+      {
+        "id": "CVE-2026-44487",
+        "severity": "HIGH",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-44487"
+      },
+      {
+        "id": "CVE-2026-44492",
+        "severity": "HIGH",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-44492"
+      },
+      {
+        "id": "CVE-2026-44496",
+        "severity": "HIGH",
+        "url": "https://nvd.nist.gov/vuln/detail/CVE-2026-44496"
+      }
+    ]
+  },
+  "cpe:2.3:a:js-yaml:js-yaml:3.13.0:*:*:*:*:node.js:*:*": {
+    "package": "js-yaml",
+    "version": "3.13.0",
+    "cpeQueried": "cpe:2.3:a:js-yaml:js-yaml:3.13.0:*:*:*:*:node.js:*:*",
+    "status": "Clean",
+    "vulnerabilities": []
+  },
+  "cpe:2.3:a:minimist:minimist:1.2.0:*:*:*:*:node.js:*:*": {
+    "package": "minimist",
+    "version": "1.2.0",
+    "cpeQueried": "cpe:2.3:a:minimist:minimist:1.2.0:*:*:*:*:node.js:*:*",
+    "status": "Clean",
+    "vulnerabilities": []
+  },
+  "cpe:2.3:a:mocha:mocha:5.2.0:*:*:*:*:node.js:*:*": {
+    "package": "mocha",
+    "version": "5.2.0",
+    "cpeQueried": "cpe:2.3:a:mocha:mocha:5.2.0:*:*:*:*:node.js:*:*",
+    "status": "Clean",
+    "vulnerabilities": []
+  },
+  "cpe:2.3:a:bcryptjs:bcryptjs:2.4.3:*:*:*:*:node.js:*:*": {
+    "package": "bcryptjs",
+    "version": "2.4.3",
+    "cpeQueried": "cpe:2.3:a:bcryptjs:bcryptjs:2.4.3:*:*:*:*:node.js:*:*",
+    "status": "Clean",
+    "vulnerabilities": []
+  },
+  "cpe:2.3:a:express:express:4.18.2:*:*:*:*:node.js:*:*": {
+    "package": "express",
+    "version": "4.18.2",
+    "cpeQueried": "cpe:2.3:a:express:express:4.18.2:*:*:*:*:node.js:*:*",
+    "status": "Clean",
+    "vulnerabilities": []
+  },
+  "cpe:2.3:a:express-session:express-session:1.17.3:*:*:*:*:node.js:*:*": {
+    "package": "express-session",
+    "version": "1.17.3",
+    "cpeQueried": "cpe:2.3:a:express-session:express-session:1.17.3:*:*:*:*:node.js:*:*",
+    "status": "Clean",
+    "vulnerabilities": []
+  },
+  "cpe:2.3:a:uuid:uuid:9.0.0:*:*:*:*:node.js:*:*": {
+    "package": "uuid",
+    "version": "9.0.0",
+    "cpeQueried": "cpe:2.3:a:uuid:uuid:9.0.0:*:*:*:*:node.js:*:*",
+    "status": "Clean",
+    "vulnerabilities": []
+  },
+  "cpe:2.3:a:nodemon:nodemon:3.0.1:*:*:*:*:node.js:*:*": {
+    "package": "nodemon",
+    "version": "3.0.1",
+    "cpeQueried": "cpe:2.3:a:nodemon:nodemon:3.0.1:*:*:*:*:node.js:*:*",
+    "status": "Clean",
+    "vulnerabilities": []
+  }
+}
