@@ -361,20 +361,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 📊 Roadmap
-
-- [ ] Support for Python (requirements.txt) and Go (go.mod)
-- [ ] VS Code extension for inline vulnerability warnings
-- [ ] CI/CD GitHub Actions integration
-- [ ] Email/webhook alerts for new CVEs
-- [ ] SBOM export (SPDX/CycloneDX)
-- [ ] Docker container support
-- [ ] Multi-user authentication
-- [ ] Custom vulnerability policies
-
----
-
-
----
-
 **Built with 🔒 by the Khusela AI Team**
