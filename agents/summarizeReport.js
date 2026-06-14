@@ -2,7 +2,7 @@ require('dotenv').config();
 const Groq = require('groq-sdk');
 
 const groq = new Groq({
-  apiKey: "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"
+  apiKey: process.env.GROQ_API_KEY
 });
 
 async function summarizeReport(rawReport) {
