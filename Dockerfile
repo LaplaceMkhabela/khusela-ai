@@ -1,57 +1,24 @@
-# Use official Node.js 20 Alpine image for smaller size
-FROM node:20-alpine AS builder
-
-# Set working directory
-WORKDIR /app
-
-# Copy package files first for better layer caching
-COPY package*.json ./
-
-# Install dependencies
-RUN npm ci --only=production && npm cache clean --force
-
-# Copy application code
-COPY . .
-
-# Create necessary directories
-RUN mkdir -p cache logs
-
-# Final stage
+# Use a lightweight Node.js Alpine image for a smaller container footprint
 FROM node:20-alpine
 
-# Install dumb-init for proper signal handling
-RUN apk add --no-cache dumb-init
+# Set the working directory inside the container
+WORKDIR /usr/src/app
 
-# Create non-root user
-RUN addgroup -g 1001 -S nodejs && \
-    adduser -S nodejs -u 1001
+# Copy package.json and package-lock.json first
+# This leverages Docker's layer caching so dependencies aren't re-installed unless they change
+COPY package*.json ./
 
-# Set working directory
-WORKDIR /app
+# Install production dependencies only
+# Using 'npm ci' ensures a clean, reproducible install based on the lockfile
+RUN npm ci --omit=dev
 
-# Copy built application from builder
-COPY --from=builder --chown=nodejs:nodejs /app /app
+# Copy the rest of the application source code
+COPY . .
 
-# Create directories with proper permissions
-RUN mkdir -p cache logs && \
-    chown -R nodejs:nodejs /app
-
-# Switch to non-root user
-USER nodejs
-
-# Expose port
+# Cloud Run sets the PORT environment variable (defaults to 8080)
+# This EXPOSE instruction is mostly for documentation
 EXPOSE 8080
 
-# Set environment variables
-ENV NODE_ENV=production \
-    PORT=8080
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD node -e "require('http').get('http://localhost:8080', (r) => {process.exit(r.statusCode === 200 ? 0 : 1)})"
-
-# Use dumb-init to handle signals properly
-ENTRYPOINT ["dumb-init", "--"]
-
-# Start the application
-CMD ["node", "server.js"]
+# Command to run the application
+# Ensure your package.json has a "start" script, or change this to ["node", "index.js"]
+CMD ["npm", "start"]
