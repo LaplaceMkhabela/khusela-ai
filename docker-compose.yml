@@ -1,9 +1,9 @@
 version: '3.8'
 
 services:
-  vulnscan-ai:
+  khusela-ai:
     build: .
-    container_name: vulnscan-ai
+    container_name: khusela-ai
     ports:
       - "8080:8080"
     environment:

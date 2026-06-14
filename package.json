@@ -1,5 +1,5 @@
 {
-  "name": "vulnscan-ai",
+  "name": "khusela-ai",
   "version": "2.0.0",
   "description": "Intelligent dependency vulnerability scanner with AI-powered insights and dashboard",
   "main": "server.js",
@@ -17,7 +17,7 @@
     "ai",
     "groq"
   ],
-  "author": "VulnScan AI",
+  "author": "khusela AI",
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
